@@ -89,16 +89,6 @@ def lsqr( m, n, A, b, damp, atol, btol, conlim, itnlim, show ):
     if wantvar:
         var = np.zeros(n)
 
-    # if show
-    #    disp(' ')
-    #    disp('LSQR            Least-squares solution of  Ax = b')
-    #    str1 = sprintf('The matrix A has %8g rows  and %8g cols', m, n);
-    #    str2 = sprintf('damp = %20.14e    wantvar = %8g', damp,wantvar);
-    #    str3 = sprintf('atol = %8.2e                 conlim = %8.2e', atol, conlim);
-    #    str4 = sprintf('btol = %8.2e                 itnlim = %8g'  , btol, itnlim);
-    #    disp(str1);   disp(str2);   disp(str3);   disp(str4);
-    # end
-
     itn    = 0
     istop  = 0
     nstop  = 0
@@ -144,18 +134,6 @@ def lsqr( m, n, A, b, damp, atol, btol, conlim, itnlim, show ):
     rnorm  = beta
     r1norm = rnorm
     r2norm = rnorm
-    # head1  = '   Itn      x(1)       r1norm     r2norm ';
-    # head2  = ' Compatible   LS      Norm A   Cond A';
-
-    # if show
-    #    disp(' ')
-    #    disp([head1 head2])
-    #    test1  = 1;      test2  = alfa / beta;
-    #    str1   = sprintf( '%6g %12.5e',        itn,   x(1) );
-    #    str2   = sprintf( ' %10.3e %10.3e', r1norm, r2norm );
-    #    str3   = sprintf( '  %8.1e %8.1e',   test1,  test2 );
-    #    disp([str1 str2 str3])
-    # end
 
     # %------------------------------------------------------------------
     # %     Main iteration loop.
@@ -285,43 +263,10 @@ def lsqr( m, n, A, b, damp, atol, btol, conlim, itnlim, show ):
 
         # %     See if it is time to print something.
 
-        # prnt = 0;
-        # if n     <= 40       , prnt = 1; end
-        # if itn   <= 10       , prnt = 1; end
-        # if itn   >= itnlim-10, prnt = 1; end
-        # if rem(itn,10) == 0  , prnt = 1; end
-        # if test3 <=  2*ctol  , prnt = 1; end
-        # if test2 <= 10*atol  , prnt = 1; end
-        # # %     if test1 <= 10*rtol  , prnt = 1; end
-        # if istop ~=  0       , prnt = 1; end
-
-        # if prnt == 1
-        #  if show
-        #     str1 = sprintf( '%6g %12.5e',        itn,   x(1) );
-        #     str2 = sprintf( ' %10.3e %10.3e', r1norm, r2norm );
-        #     str3 = sprintf( '  %8.1e %8.1e',   test1,  test2 );
-        #     str4 = sprintf( ' %8.1e %8.1e',    anorm,  acond );
-        #     disp([str1 str2 str3 str4])
-        #  end
-        # end
         if istop > 0:
             break
 
     # %     End of iteration loop.
     # %     Print the stopping condition.
-
-    # if show
-    #    disp(' ')
-    #    disp('LSQR finished')
-    #    disp(msg(istop+1,:))
-    #    disp(' ')
-    #    str1 = sprintf( 'istop =%8g   r1norm =%8.1e',   istop, r1norm );
-    #    str2 = sprintf( 'anorm =%8.1e   arnorm =%8.1e', anorm, arnorm );
-    #    str3 = sprintf( 'itn   =%8g   r2norm =%8.1e',     itn, r2norm );
-    #    str4 = sprintf( 'acond =%8.1e   xnorm  =%8.1e', acond, xnorm  );
-    #    disp([str1 '   ' str2])
-    #    disp([str3 '   ' str4])
-    #    disp(' ')
-    # end
 
     return x, istop, itn, r1norm, r2norm, anorm, acond, arnorm, xnorm, var

@@ -174,11 +174,7 @@ def spgl1(A, b, tau=[], sigma=[], x=[], options={}):
 
     m = np.size(b)
 
-    if False:
-        pass
-    # elif not b and not A:
-    #     print('SPGL1 ERROR: At least two arguments are required')
-    elif not tau and not sigma:
+    if not tau and not sigma:
         tau = 0
         sigma = 0
         singleTau = False
@@ -321,38 +317,6 @@ def spgl1(A, b, tau=[], sigma=[], x=[], options={}):
     #% Log header.
     #%----------------------------------------------------------------------
 
-# DO THIS LATER
-
-    # print('');
-    # print(' #%s\n',repmat('=',1,80));
-    # print(' SPGL1  v.#%s (#%s)\n', REVISION, DATE);
-    # print(' #%s\n',repmat('=',1,80));
-    # print(' #%-22s: #%8i #%4s'   ,'No. rows'          ,m       ,'');
-    # print(' #%-22s: #%8i\n'     ,'No. columns'       ,n          );
-    # print(' #%-22s: #%8.2e #%4s' ,'Initial tau'       ,tau     ,'');
-    # print(' #%-22s: #%8.2e\n'   ,'Two-norm of b'     ,bNorm      );
-    # print(' #%-22s: #%8.2e #%4s' ,'Optimality tol'    ,optTol  ,'');
-    # if singleTau
-    #    print(' #%-22s: #%8.2e\n'  ,'Target one-norm of x'  ,tau       );
-    # else
-    #    print(' #%-22s: #%8.2e\n','Target objective'  ,sigma      );
-    # end
-    # print(' #%-22s: #%8.2e #%4s' ,'Basis pursuit tol' ,bpTol   ,'');
-    # print(' #%-22s: #%8i\n'     ,'Maximum iterrations',maxIts     );
-    # print('\n');
-    # if singleTau
-    #    logB = ' #%5i  #%13.7e  #%13.7e  #%9.2e  #%6.1f  #%6i  #%6i';
-    #    logH = ' #%5s  #%13s  #%13s  #%9s  #%6s  #%6s  #%6s\n';
-    #    print(logH,'iterr','Objective','Relative Gap','gNorm','stepG','nnzX','nnzG');
-    # else
-    #    logB = ' #%5i  #%13.7e  #%13.7e  #%9.2e  #%9.3e  #%6.1f  #%6i  #%6i';
-    #    logH = ' #%5s  #%13s  #%13s  #%9s  #%9s  #%6s  #%6s  #%6s  #%13s\n';
-    #    print(logH,'iterr','Objective','Relative Gap','Rel Error',...
-    #           'gNorm','stepG','nnzX','nnzG','tau');
-    # end
-
-    #% Project the starting point and evaluate function and gradient.
-
     spglproject=options['project']
 
     x         = spglproject(x,weights,tau)
@@ -454,26 +418,6 @@ def spgl1(A, b, tau=[], sigma=[], x=[], options={}):
         if not stat and iterr+1 >= maxIts:
             stat = EXIT_iterrATIONS
 
-        # #%------------------------------------------------------------------
-        # #% Print log, update history and act on exit conditions.
-        # #%------------------------------------------------------------------
-        # if logLevel >= 2 or singleTau or printTau or iterr == 0 or stat:
-        #     tauFlag = '              '; subFlag = '';
-        #     if printTau, tauFlag = sprintf(' #%13.7e',tau);   end
-        #     if subspace, subFlag = sprintf(' S #%2i',itnLSQR); end
-        #     if singleTau
-        #       printf(logB,iterr,rNorm,rGap,gNorm,log10(stepG),nnzX,nnzG);
-        #       if subspace
-        #          printf('  #%s',subFlag);
-        #       end
-        #     else
-        #       printf(logB,iterr,rNorm,rGap,rError1,gNorm,log10(stepG),nnzX,nnzG);
-        #       if printTau || subspace
-        #          printf(' #%s',[tauFlag subFlag]);
-        #       end
-        #     end
-        #     printf('\n');
-        # end
         printTau = False
         subspace = False
 
@@ -611,13 +555,7 @@ def spgl1(A, b, tau=[], sigma=[], x=[], options={}):
         except ValueError: #% Detect matrix-vector multiply limit error
             print('MAJOR ERROR - I NEED TO LEARN TO THROW ERRORS')
             pass # DRR this is wrong, but let's do one thing at a time
-           # if strcmp(err.identifier,'SPGL1:MaximumMatvec')
-           #   stat = EXIT_MATVEC_LIMIT;
-           #   iterr = iterr - 1;
-           #   x = xOld;  f = fOld;  g = gOld;  r = rOld;
-           #   break;
-           # else
-           #   rethrow(err);
+
 
         #%------------------------------------------------------------------
         #% Update function history.
@@ -660,39 +598,6 @@ def spgl1(A, b, tau=[], sigma=[], x=[], options={}):
     info['xNorm1']      = xNorm1[0:iterr]
     info['rNorm2']      = rNorm2[0:iterr]
     info['lambdaa']     = lambdaa[0:iterr]
-
-    # #% Print final output.
-    # if stat == EXIT_OPTIMAL:
-    #     print('EXIT -- Optimal solution found')
-    # elif stat == EXIT_iterrATIONS:
-    #     print('ERROR EXIT -- Too many iterrations')
-    # elif stat == EXIT_ROOT_FOUND:
-    #     print('EXIT -- Found a root')
-    # elif stat == {EXIT_BPSOL_FOUND}:
-    #     print('EXIT -- Found a BP solution')
-    # elif stat == {EXIT_LEAST_SQUARES}:
-    #     print('EXIT -- Found a least-squares solution')
-    # elif stat == EXIT_LINE_ERROR:
-    #     print('ERROR EXIT -- Linesearch error (#%i)\n',lnr)
-    # elif stat == EXIT_SUBOPTIMAL_BP:
-    #     print('EXIT -- Found a suboptimal BP solution')
-    # elif stat == EXIT_MATVEC_LIMIT:
-    #     print('EXIT -- Maximum matrix-vector operations reached')
-    # elif stat == EXIT_ACTIVE_SET:
-    #     print('EXIT -- Found a possible active set')
-    # else:
-    #     print('SPGL1 ERROR: Unknown termination condition')
-
-
-    # printf(' #%-20s:  #%6i #%6s #%-20s:  #%6.1f\n',...
-    #    'Products with A',nProdA,'','Total time   (secs)',info.timeTotal);
-    # printf(' #%-20s:  #%6i #%6s #%-20s:  #%6.1f\n',...
-    #    'Products with A''',nProdAt,'','Project time (secs)',timeProject);
-    # printf(' #%-20s:  #%6i #%6s #%-20s:  #%6.1f\n',...
-    #    'Newton iterrations',nNewton,'','Mat-vec time (secs)',timeMatProd);
-    # printf(' #%-20s:  #%6i #%6s #%-20s:  #%6i\n', ...
-    #    'Line search its',nLineTot,'','Subspace iterrations',itnTotLSQR);
-    # printf('\n');
 
     return x,r,g,info
 
@@ -859,29 +764,3 @@ def blockDiagonalExplicit(A, m, n, g, x, mode):
        y = y.flatten(1)
     return y
 
-
-
-# def fakeFourier(idx,n,x,mode):
-#     # %PARTIALFOURIER  Partial Fourier operator
-#     # %
-#     # % Y = PARTIALFOURIER(IDX,N,X,MODE)
-
-#     if mode==1:
-#         z = np.fft.fft(x) / np.sqrt(n)
-#         return z[idx].flatten()
-#     else:
-#         z = np.zeros(n,dtype=complex)
-#         z[idx] = x
-#         return np.fft.ifft(z) * np.sqrt(n)
-
-
-# m=50
-# n=128
-# k=14
-# A,Rtmp = qr(np.random.randn(n,m))
-# A=A.T
-# p = permutation(n)
-# p=p[0:k]
-# x0=zeros(n)
-# x0[p]=random.randn(k)
-# b=dot(A,x0)
