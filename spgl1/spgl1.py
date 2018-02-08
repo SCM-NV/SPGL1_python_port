@@ -210,7 +210,7 @@ def spgl1(A, b, tau=[], sigma=[], x=[], options={}):
     'dual_norm'  : NormL1_dual
        }
     defaultopts.update(options)
-    options = spgSetParms(options);
+    options = spgSetParms(defaultopts);
 
     # fid           = options['fid']
     # logLevel      = options['verbosity']
