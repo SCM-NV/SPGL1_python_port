@@ -192,7 +192,7 @@ def spgl1(A, b, tau=[], sigma=[], x=[], options={}):
     # %----------------------------------------------------------------------
     # % Grab input options and set defaults where needed.
     # %----------------------------------------------------------------------
-    defaultopts = spgSetParms({
+    defaultopts = {
     'fid'        :      1 , # File ID for output
     'verbosity'  :      2 , # Verbosity level
     'iterations' :   10*m , # Max number of iterrations
@@ -212,8 +212,9 @@ def spgl1(A, b, tau=[], sigma=[], x=[], options={}):
     'project'    : NormL1_project ,
     'primal_norm': NormL1_primal  ,
     'dual_norm'  : NormL1_dual
-       })
-    options = spgSetParms(defaultopts);
+       }
+    defaultopts.update(options)
+    options = spgSetParms(options);
 
     # fid           = options['fid']
     # logLevel      = options['verbosity']
