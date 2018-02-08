@@ -1,4 +1,3 @@
-from __future__ import division
 import numpy as np
 
 # THIS NEEDS TO BE REDONE IN C AND COMPILED FOR CYTHON

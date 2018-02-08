@@ -1,6 +1,5 @@
-from __future__ import division, absolute_import
 import numpy as np
-from spgl1.oneProjector import oneProjector
+from .oneProjector import oneProjector
 
 def spgSetParms(inputdictionary):
 # %SPGSETPARMS  Set options for SPGL1
