@@ -197,9 +197,9 @@ def spgl1(A, b, tau=[], sigma=[], x=[], options={}):
     'verbosity'  :      2 , # Verbosity level
     'iterations' :   10*m , # Max number of iterrations
     'nPrevVals'  :      3 , # Number previous func values for linesearch
-    'bpTol'      :  1e-06 , # Tolerance for basis pursuit solution
-    'lsTol'      :  1e-06 , # Least-squares optimality tolerance
-    'optTol'     :  1e-04 , # Optimality tolerance
+    'bpTol'      :  1e-08 , # Tolerance for basis pursuit solution
+    'lsTol'      :  1e-08 , # Least-squares optimality tolerance
+    'optTol'     :  1e-08 , # Optimality tolerance
     'decTol'     :  1e-04 , # Reqd rel. change in primal obj. for Newton
     'stepMin'    :  1e-16 , # Minimum spectral step
     'stepMax'    :  1e+05 , # Maximum spectral step
